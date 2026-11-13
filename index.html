@@ -81,7 +81,6 @@
 
   main { padding: calc(var(--pad) + 66px) var(--pad) calc(var(--pad) + 40px); }
   .wrap { width: min(880px, 100%); margin: 0 auto; }
-  .head { margin: 0 0 clamp(22px, 3vw, 34px); }
 
   .eyebrow {
     margin: 0 0 10px;
@@ -92,14 +91,14 @@
     color: var(--gold);
   }
   .title {
-    margin: 0;
+    margin: 0 0 clamp(22px, 3vw, 34px);
     font-size: clamp(21px, 2.7vw, 31px);
     font-weight: 600;
     letter-spacing: -.015em;
     line-height: 1.2;
   }
 
-  .sheets { display: flex; flex-direction: column; gap: clamp(20px, 3vw, 32px); }
+  .sheets { display: flex; flex-direction: column; gap: clamp(48px, 7vw, 72px); }
 
   /* ---------- download ---------- */
 
@@ -141,14 +140,6 @@
     padding: clamp(26px, 4vw, 44px) clamp(22px, 4vw, 48px) clamp(30px, 4vw, 48px);
     box-shadow: 0 16px 40px rgba(2, 10, 28, .42);
   }
-  .sheet .tag {
-    margin: 0 0 18px;
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--paper-blue);
-  }
   .sheet .quote {
     margin: 0;
     font-size: clamp(15px, 1.9vw, 18px);
@@ -164,7 +155,8 @@
     text-transform: uppercase;
     color: #6b7480;
   }
-  .sheet .blocks { margin-top: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: clamp(26px, 3.2vw, 36px); }
+  .sheet .blocks { margin-top: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; gap: clamp(30px, 3.8vw, 42px); }
+  .sheet .blocks:first-child { margin-top: 0; }
 
   .blk h3 {
     margin: 0 0 14px;
@@ -214,16 +206,8 @@
   }
   textarea.f:focus { border-color: var(--paper-blue); }
 
-  .split { display: flex; gap: 28px; }
+  .split { display: flex; gap: 40px; }
   .split > div { flex: 1; min-width: 0; }
-  .split h4 {
-    margin: 0 0 8px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--paper-blue);
-  }
 
   .inline-q { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
   .inline-q h3 { margin: 0; }
@@ -327,17 +311,28 @@
     width: 816px;
     background: #fff;
   }
+  /* One sheet = one letter page (816 x 1080 at the PDF's margins). The writing
+     boxes and the space between blocks share whatever room is left, so short
+     pages spread out instead of bunching at the top. */
   .psheet {
     width: 816px;
+    min-height: 1080px;
+    display: flex;
+    flex-direction: column;
     background: #fff;
     color: #1c1c1c;
-    padding: 56px 64px 64px;
+    padding: 56px 64px 52px;
     font-family: var(--font);
   }
-  .psheet .pmark { width: 190px; aspect-ratio: 520/61; margin-bottom: 30px; }
+  .psheet .pmark { flex: none; width: 190px; aspect-ratio: 520/61; margin-bottom: 34px; }
   .psheet .pq { margin: 0; font: italic 600 17px var(--font); line-height: 1.45; }
   .psheet .pr { margin: 6px 0 0; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #6b7480; }
-  .psheet h3 { margin: 28px 0 12px; font-size: 18px; font-weight: 600; color: #2e6db4; }
+  .psheet .pq + .pbody, .psheet .pr + .pbody { margin-top: 30px; }
+  .psheet .pbody { flex: 1; display: flex; flex-direction: column; gap: 30px; }
+  .psheet .psp { flex: 1 1 0; margin: -15px 0; }
+  .psheet .pgrow { flex: 3 0 auto; display: flex; flex-direction: column; }
+  .psheet .pgrow .ptext { flex: 1 0 auto; }
+  .psheet h3 { margin: 0 0 12px; font-size: 18px; font-weight: 600; color: #2e6db4; }
   .psheet .pline { display: flex; gap: 10px; align-items: baseline; margin: 0 0 12px; }
   .psheet .pline b { flex: none; width: 24px; font-weight: 400; color: #7a8593; font-size: 14px; }
   .psheet .pline u { flex: 1; text-decoration: none; border-bottom: 1.5px solid #c9d4e4; padding-bottom: 4px; font-size: 14px; min-height: 22px; display: block; }
@@ -346,13 +341,13 @@
     padding: 12px 14px; font-size: 14px; line-height: 1.6; white-space: pre-wrap;
     min-height: 54px;
   }
-  .psheet .pfoot { margin-top: 34px; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #9aa2ab; }
+  .psheet .ptitle { flex: none; margin: 0 0 30px; font-size: 27px; font-weight: 600; letter-spacing: -.015em; line-height: 1.2; color: #04122c; }
   .psheet .pcall { border: 5px solid #fab040; background: #fab040; border-radius: 6px; padding: 6px; }
   .psheet .pcall h4 { margin: 0 0 6px; text-align: center; font-size: 14px; }
   .psheet .pcall .pin { background: #fff; border-radius: 3px; padding: 10px 12px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; min-height: 44px; }
-  .psheet .pgrid { display: flex; gap: 28px; }
+  .psheet .pgrid { display: flex; gap: 40px; }
   .psheet .pgrid > div { flex: 1; }
-  .psheet .pgrid h5 { margin: 0 0 8px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #2e6db4; }
+  .psheet .pgrid .pline:last-child { margin-bottom: 0; }
   .psheet .pscale { display: flex; justify-content: space-between; width: 150px; margin: 0 0 6px auto; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: #8a94a2; }
   .psheet .prow { display: flex; align-items: center; gap: 18px; padding: 9px 0; border-top: 1px solid #e8edf4; }
   .psheet .prow:last-child { border-bottom: 1px solid #e8edf4; }
@@ -385,10 +380,6 @@
 
 <main>
   <div class="wrap">
-    <div class="head">
-      <h1 class="title">The Buyer/Seller Dance</h1>
-    </div>
-
     <div class="sheets" id="sheets"></div>
 
     <div class="allbox">
@@ -412,32 +403,29 @@
   const LOGO_DARK = "data:image/png;base64,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";
 
   /* ------------------------------------------------------------------
-     The worksheet. Each page is one white sheet, top to bottom.
+     The worksheet. Each page is a big title (title:) over one white sheet.
      Block types:
        num     numbered lines           { t, k, label, n }
        split   two numbered columns     { t, k, cols: [[key, heading, lines], ...] }
        inline  one line next to a label { t, k, label }
        note    gold box, no field       { t, text }
        prompt  writing box              { t, k, label, rows }
-       rate    1-5 rating rows          { t, k, label, items: [name, ...] }
+       rate    1-5 rating rows          { t, k, items: [name, ...] }  (label optional)
        callout gold box with one line   { t, k, label }  (auto-fills from the rating)
-     Leave rn out of a page to drop the "Sandler Rule #" line.
+     To put a quote at the top of a page, add rule:"..." (and rn: for the
+     "Sandler Rule #" line under it).
      ------------------------------------------------------------------ */
 
   const PAGES = [
-    { id:"pg1", pg:"Pg. 1", foot:"The Buyer/Seller Dance", rn:8,
-      rule:"Prospects buy for their reasons, not the salesperson’s reasons.",
+    { id:"pg1", title:"The Buyer/Seller Dance",
       blocks:[
-        { t:"num", k:"steps", label:"5 steps of a sales process:", n:5 },
         { t:"split", k:"proc", cols:[["seller", "Seller’s Process", 5], ["buyer", "Buyer’s Process", 4]] },
-        { t:"inline", k:"control", label:"Who is in control?" },
         { t:"note", text:"“You are paying for the sins of the salespeople that came before you.”" },
         { t:"prompt", k:"mine", label:"Where I see this with my own prospects:", rows:4 }
       ]},
-    { id:"pg2", pg:"Pg. 2", foot:"Six Hidden Weaknesses", rn:80,
-      rule:"Selling is not a place to get your needs met.",
+    { id:"pg2", title:"Six Hidden Weaknesses",
       blocks:[
-        { t:"rate", k:"rate", label:"How true is this for me?", items:[
+        { t:"rate", k:"rate", items:[
           "Need for Approval",
           "Stays in the Moment / Emotional Involvement",
           "Head Trash (Unsupportive Beliefs)",
@@ -524,7 +512,7 @@
     }
     if (b.t === "split") {
       return '<div class="blk split">' + b.cols.map(function (c) {
-        return "<div><h4>" + esc(c[1]) + "</h4>" + numLines(base + "." + c[0], c[2]) + "</div>";
+        return "<div><h3>" + esc(c[1]) + "</h3>" + numLines(base + "." + c[0], c[2]) + "</div>";
       }).join("") + "</div>";
     }
     if (b.t === "inline") {
@@ -552,19 +540,23 @@
         rows += '<div class="rrow" data-row="' + k + '"><div class="rname"><b>' + esc(it) +
                 '</b></div><div class="rbtns" role="group" aria-label="' + esc(it) + '">' + btns + "</div></div>";
       });
-      return '<div class="blk rate"><h3>' + esc(b.label) + '</h3><div class="scale"><span>1 Not me</span><span>5 That’s me</span></div>' +
+      return '<div class="blk rate">' + (b.label ? "<h3>" + esc(b.label) + "</h3>" : "") + '<div class="scale"><span>1 Not me</span><span>5 That’s me</span></div>' +
              "<div>" + rows + "</div></div>";
     }
     return "";
   }
 
-  function sheetHTML(page) {
-    return '<article class="sheet" id="sheet-' + page.id + '">' +
-      '<p class="tag">' + esc(page.pg) + " &mdash; " + esc(page.foot) + "</p>" +
-      '<p class="quote">' + esc(page.rule) + "</p>" +
-      (page.rn ? '<p class="rule">Sandler Rule #' + page.rn + "</p>" : "") +
+  /* Each page is a big title on the navy background with its white sheet under it.
+     The first title is the page's h1. */
+  function sheetHTML(page, i) {
+    const h = i ? "h2" : "h1";
+    return '<section class="pgsec">' +
+      (page.title ? "<" + h + ' class="title">' + esc(page.title) + "</" + h + ">" : "") +
+      '<article class="sheet" id="sheet-' + page.id + '">' +
+      (page.rule ? '<p class="quote">' + esc(page.rule) + "</p>" : "") +
+      (page.rule && page.rn ? '<p class="rule">Sandler Rule #' + page.rn + "</p>" : "") +
       '<div class="blocks">' + page.blocks.map(function (b) { return blockHTML(page, b); }).join("") + "</div>" +
-      "</article>";
+      "</article></section>";
   }
 
   /* Paint the rating state, mark the top row(s) gold, and fill the callout
@@ -608,21 +600,21 @@
     const base = page.id + "." + b.k;
     if (b.t === "num") return "<h3>" + esc(b.label) + "</h3>" + pLines(base, b.n);
     if (b.t === "split") {
-      return '<div class="pgrid" style="margin-top:28px">' + b.cols.map(function (c) {
-        return "<div><h5>" + esc(c[1]) + "</h5>" + pLines(base + "." + c[0], c[2]) + "</div>";
+      return '<div class="pgrid">' + b.cols.map(function (c) {
+        return "<div><h3>" + esc(c[1]) + "</h3>" + pLines(base + "." + c[0], c[2]) + "</div>";
       }).join("") + "</div>";
     }
     if (b.t === "inline") {
-      return '<div class="pline" style="margin-top:22px"><b style="width:auto;color:#2e6db4;font-size:18px;font-weight:600">' +
+      return '<div class="pline" style="margin:0"><b style="width:auto;color:#2e6db4;font-size:18px;font-weight:600">' +
              esc(b.label) + "</b><u>" + esc(val(base)) + "</u></div>";
     }
     if (b.t === "note") {
-      return '<div class="pcall" style="margin-top:26px"><div class="pin" style="text-align:center;font-weight:600;min-height:0">' +
+      return '<div class="pcall"><div class="pin" style="text-align:center;font-weight:600;min-height:0">' +
              esc(b.text) + "</div></div>";
     }
     if (b.t === "prompt") return "<h3>" + esc(b.label) + "</h3>" + pTextBox(val(base));
     if (b.t === "callout") {
-      return '<div class="pcall" style="margin-top:26px"><h4>' + esc(b.label) +
+      return '<div class="pcall"><h4>' + esc(b.label) +
              '</h4><div class="pin" style="text-align:center;font-weight:600;font-size:16px">' + esc(val(base)) + "</div></div>";
     }
     if (b.t === "rate") {
@@ -638,7 +630,7 @@
         rows += '<div class="prow"><div class="pn"><b>' + esc(it) +
                 '</b></div><div class="pbx">' + bx + "</div></div>";
       });
-      return "<h3>" + esc(b.label) + '</h3><div class="pscale"><span>1 Not me</span><span>5 That’s me</span></div><div>' + rows + "</div>";
+      return (b.label ? "<h3>" + esc(b.label) + "</h3>" : "") + '<div class="pscale"><span>1 Not me</span><span>5 That’s me</span></div><div>' + rows + "</div>";
     }
     return "";
   }
@@ -648,10 +640,13 @@
     d.className = "psheet";
     d.innerHTML =
       '<div class="pmark" style="background:url(' + LOGO_DARK + ') left center / contain no-repeat"></div>' +
-      '<p class="pq">' + esc(page.rule) + "</p>" +
-      (page.rn ? '<p class="pr">Sandler Rule #' + page.rn + "</p>" : "") +
-      page.blocks.map(function (b) { return printBlock(page, b); }).join("") +
-      '<p class="pfoot">' + esc(page.pg) + " &mdash; " + esc(page.foot) + "</p>";
+      (page.title ? '<p class="ptitle">' + esc(page.title) + "</p>" : "") +
+      (page.rule ? '<p class="pq">' + esc(page.rule) + "</p>" : "") +
+      (page.rule && page.rn ? '<p class="pr">Sandler Rule #' + page.rn + "</p>" : "") +
+      '<div class="pbody">' + page.blocks.map(function (b, i) {
+        return (i ? '<i class="psp"></i>' : "") +
+               '<div class="pblk' + (b.t === "prompt" ? " pgrow" : "") + '">' + printBlock(page, b) + "</div>";
+      }).join("") + "</div>";
     return d;
   }
 
@@ -769,7 +764,7 @@
   function grow(el) { el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
 
   loadAnswers();
-  $("sheets").innerHTML = PAGES.map(sheetHTML).join("");
+  $("sheets").innerHTML = PAGES.map(function (p, i) { return sheetHTML(p, i); }).join("");
   $("sheets").querySelectorAll("textarea.f").forEach(grow);
   refreshRating();
 
